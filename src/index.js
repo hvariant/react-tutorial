@@ -13,6 +13,10 @@ function Square(props) {
   );
 }
 
+function isDraw(squares) {
+  return squares.every(e => e) && !getWinner(squares);
+}
+
 function getWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -27,7 +31,10 @@ function getWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return {
+        winner: squares[a],
+        line: lines[i],
+      };
     }
   }
   return null;
@@ -39,7 +46,7 @@ class Board extends React.Component {
       <Square
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
-        highlighted={this.props.highlight === i}
+        highlighted={this.props.highlights.includes(i)}
       />
     );
   }
@@ -78,7 +85,7 @@ class Game extends React.Component {
       }],
       moveNumber: 0,
       xIsNext: true,
-      highlight: null,
+      currentPosition: null,
     };
   }
   
@@ -86,7 +93,7 @@ class Game extends React.Component {
     this.setState({
       moveNumber: move,
       xIsNext: (move % 2) === 0,
-      highlight: this.state.history[move].position
+      currentPosition: this.state.history[move].position
     });
   }
 
@@ -103,7 +110,7 @@ class Game extends React.Component {
         squares: squares,
         position: i
       }]),
-      highlight: i,
+      currentPosition: i,
       moveNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
@@ -115,7 +122,9 @@ class Game extends React.Component {
     const winner = getWinner(current.squares);
     let banner;
     if(winner) {
-      banner = 'Winner: ' + winner;
+      banner = 'Winner: ' + winner.winner;
+    } else if(isDraw(current.squares)) {
+      banner = 'Draw';
     } else {
       banner = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
@@ -136,13 +145,19 @@ class Game extends React.Component {
       );
     });
 
+    const highlights = [this.state.currentPosition];
+    if(winner)
+    {
+      highlights.push(...winner.line);
+    }
+
     return (
       <div className="game">
         <div className="game-board">
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
-            highlight={this.state.highlight}
+            highlights={highlights}
           />
         </div>
         <div className="game-info">
