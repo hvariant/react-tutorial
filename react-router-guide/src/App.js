@@ -1,10 +1,10 @@
 import React from "react";
 import "./index.css"
-import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, Redirect, useHistory, useParams, useLocation } from "react-router-dom";
 
 export default function App() {
   const name = "John";
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return (
     <Router>
       <main>
@@ -43,21 +43,25 @@ const Home = () => (
 );
 // About Page
 // Redirect replaces the current page instead of pushing to history
-const About = ({match:{params:{name}}}) => (
-  <>
+const About = () => {
+  const { name } = useParams();
+  return (<>
     { name !== 'John' ? <Redirect to='/' /> : null }
     <h1>About {name}</h1>
     <FakeText />
-  </>
-);
+  </>);
+};
 // Contact Page
-const Contact = ({history}) => (
-  <>
+const Contact = () => {
+  const history = useHistory();
+  const { pathname } = useLocation();
+  return (<>
     <h1>Contact</h1>
     <button onClick={() => history.push('/')}>Go home</button>
+    <p>Current URL: {pathname}</p>
     <FakeText />
-  </>
-);
+  </>);
+};
 
 const FakeText = () => (
   <p>
