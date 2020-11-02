@@ -87,6 +87,7 @@ class Game extends React.Component {
       xIsNext: true,
       currentPosition: null,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
   
   jumpTo(move) {
@@ -156,7 +157,7 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
+            onClick={this.handleClick}
             highlights={highlights}
           />
         </div>
