@@ -5,7 +5,7 @@ import {
 } from "../actions/actionTypes";
 import { initialState } from "./initialState";
 
-export function courseReducer(state = initialState.courses, action) {
+export default function courseReducer(state = initialState.courses, action) {
   switch (action.type) {
     case LOAD_COURSES_SUCCESS:
       return action.courses;
