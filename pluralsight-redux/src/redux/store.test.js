@@ -3,15 +3,15 @@ import { rootReducer } from "./reducers";
 import { initialState } from "./reducers/initialState";
 import * as courseActions from "./actions/courseActions";
 
-it('should handle creating courses', () => {
+it("should handle creating courses", () => {
   const store = createStore(rootReducer, initialState);
   const course = {
     id: 0,
-    title: 'Clean Code'
+    title: "Clean Code",
   };
   const courseUpdated = {
     id: 0,
-    title: 'Haskell in Action'
+    title: "Haskell in Action",
   };
 
   store.dispatch(courseActions.createCourseSuccess(course));

@@ -25,7 +25,7 @@ function renderPage(args) {
   return mount(<ManageCoursesPage {...props} />);
 }
 
-it('sets error when saving with an empty title field', () => {
+it("sets error when saving with an empty title field", () => {
   const wrapper = renderPage();
   wrapper.find("form").simulate("submit");
   const error = wrapper.find(".alert").first();
