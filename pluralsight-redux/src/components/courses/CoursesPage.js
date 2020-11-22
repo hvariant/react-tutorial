@@ -28,12 +28,14 @@ class CoursesPage extends React.Component {
     }
   }
 
-  handleDeleteCourse = course => {
+  handleDeleteCourse = async (course) => {
     toast.success("Course deleted");
-    this.props.deleteCourse(course).catch(error => {
+    try {
+      await this.props.deleteCourse(course);
+    } catch (error) {
       toast.error("Delete failed." + error.message, { autoClose: false });
-    });
-  }
+    }
+  };
 
   render() {
     return (
@@ -52,7 +54,10 @@ class CoursesPage extends React.Component {
               Add Course
             </button>
 
-            <CourseList courses={this.props.courses} onDeleteClick={this.handleDeleteCourse} />
+            <CourseList
+              courses={this.props.courses}
+              onDeleteClick={this.handleDeleteCourse}
+            />
           </>
         )}
       </>
