@@ -13,7 +13,7 @@ export function loadAuthors() {
       .then((authors) => {
         dispatch(loadAuthorsSuccess(authors));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(apiCallError(error));
         throw error;
       });
