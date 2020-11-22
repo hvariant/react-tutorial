@@ -4,6 +4,7 @@ import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
+import Spinner from "../common/Spinner";
 
 function ManageCoursesPage(props) {
   const {
@@ -48,16 +49,16 @@ function ManageCoursesPage(props) {
     });
   }
 
-  return (
-    <>
-      <CourseForm
-        course={course}
-        errors={errors}
-        authors={authors}
-        onChange={handleChange}
-        onSave={handleSave}
-      />
-    </>
+  return (authors.length === 0 || course.length === 0) ? (
+    <Spinner />
+  ) : (
+    <CourseForm
+      course={course}
+      errors={errors}
+      authors={authors}
+      onChange={handleChange}
+      onSave={handleSave}
+    />
   );
 }
 
@@ -76,7 +77,12 @@ function getCourseBySlug(courses, slug) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const newCourse = { title: "", category: "" };
+  const newCourse = {
+    id: null,
+    title: "",
+    authorId: null,
+    category: "",
+  };
   const slug = ownProps.match.params.slug;
   const course =
     slug && state.courses.length > 0
