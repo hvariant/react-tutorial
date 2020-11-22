@@ -5,6 +5,7 @@ import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 function ManageCoursesPage(props) {
   const {
@@ -17,6 +18,7 @@ function ManageCoursesPage(props) {
   } = props;
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -46,18 +48,26 @@ function ManageCoursesPage(props) {
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course).then(() => {
-      history.push("/courses");
-    });
+    setSaving(true);
+    saveCourse(course)
+      .then(() => {
+        toast.success("Course saved.");
+        history.push("/courses");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
 
-  return (authors.length === 0 || course.length === 0) ? (
+  return authors.length === 0 || course.length === 0 ? (
     <Spinner />
   ) : (
     <CourseForm
       course={course}
       errors={errors}
       authors={authors}
+      saving={saving}
       onChange={handleChange}
       onSave={handleSave}
     />
