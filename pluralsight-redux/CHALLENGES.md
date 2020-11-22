@@ -1,0 +1,10 @@
+- [ ] administering authors
+- [ ] add filters for the course list at the top of the course list table
+- [ ] hide the course list table when there are no courses
+- [ ] message to the user if they try to leave the Manage Course form when they have unsaved changes
+- [ ] enhance the client and server‑side validation on the Manage Course form to be more strict about the data that you can enter
+- [ ] show a 404 on the Manage Course page when an invalid course slug is provided in the URL
+- [ ] show the number of courses in the header
+- [ ] add pagination to the course table in order to support large datasets
+- [ ] sort the course table alphabetically by title by default, add drop‑downs above the table that allow you to sort by different columns
+- [ ] keep the old course data so that users can view history and click Undo to revert their changes even after hitting Save
