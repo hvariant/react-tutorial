@@ -15,7 +15,7 @@ export function createCourseSuccess(course) {
   return { type: CREATE_COURSE_SUCCESS, course };
 }
 
-function updateCourseSuccess(course) {
+export function updateCourseSuccess(course) {
   return { type: UPDATE_COURSE_SUCCESS, course };
 }
 
