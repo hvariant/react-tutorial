@@ -21,7 +21,7 @@ function renderCourseForm(args) {
 it("should render Add Course", () => {
   const { getByText } = renderCourseForm();
   getByText("Add Course");
-})
+});
 
 it("sets submit button label to saving when saving is true", () => {
   const { getByText } = renderCourseForm({ saving: true });

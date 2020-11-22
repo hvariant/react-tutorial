@@ -7,7 +7,7 @@ import CourseForm from "./CourseForm";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 
-function ManageCoursesPage(props) {
+export function ManageCoursesPage(props) {
   const {
     courses,
     authors,
