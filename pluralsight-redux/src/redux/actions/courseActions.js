@@ -11,7 +11,7 @@ function loadCoursesSuccess(courses) {
   return { type: LOAD_COURSES_SUCCESS, courses };
 }
 
-function createCourseSuccess(course) {
+export function createCourseSuccess(course) {
   return { type: CREATE_COURSE_SUCCESS, course };
 }
 
