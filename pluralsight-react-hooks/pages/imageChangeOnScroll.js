@@ -6,33 +6,28 @@ const ImageChangeOnScroll = () => {
   const [mouseEventCount, setMouseEventCount] = useState(0);
   useEffect(() => {
     window.document.title = `# ${currentDivId}`;
-    console.log(`useEffect: setting title to ${currentDivId}`);
   }, [currentDivId]);
   return (
     <div>
       <span>mouseEventCount: {mouseEventCount}</span>
-      {[...Array(5).keys()].map((id) => {
-        return (
-          <div
-            key={id}
-            onMouseOver={() => {
-              setCurrentDivId(id);
-              setMouseEventCount(mouseEventCount + 1);
-              console.log(`onMouseOver:${id}`);
-            }}
-          >
-            <ImageToggleOnScroll
-              primaryImage="static/bw/return-to-forever.png"
-              secondaryImage="static/return-to-forever.png"
-            />
-            <br />
-            <ImageToggleOnScroll
-              primaryImage="static/bw/romantic-warrior.png"
-              secondaryImage="static/romantic-warrior.png"
-            />
-          </div>
-        );
-      })}
+      {[...Array(11).keys()]
+        .map((i) => i + 1)
+        .map((id) => {
+          return (
+            <div
+              key={id}
+              onMouseOver={() => {
+                setCurrentDivId(id);
+                setMouseEventCount(mouseEventCount + 1);
+              }}
+            >
+              <ImageToggleOnScroll
+                primaryImage={`static/bw/rtf-${id}.jpg`}
+                secondaryImage={`static/rtf-${id}.jpg`}
+              />
+            </div>
+          );
+        })}
     </div>
   );
 };

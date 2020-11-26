@@ -27,8 +27,8 @@ const ImageToggleOnScroll = ({ primaryImage, secondaryImage }) => {
   return (
     <img
       src={isLoading ? transparentGif : inView ? secondaryImage : primaryImage}
-      width="500"
-      height="500"
+      width="300"
+      height="300"
       ref={imageRef}
     />
   );
