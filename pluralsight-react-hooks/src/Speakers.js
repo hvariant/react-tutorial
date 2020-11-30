@@ -1,16 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, useReducer } from 'react';
 
 import { Header } from '../src/Header';
 import { Menu } from '../src/Menu';
 import SpeakerData from './SpeakerData';
 import SpeakerDetail from './SpeakerDetail';
+import { ConfigContext } from './App';
 
 const Speakers = ({}) => {
   const [speakingSaturday, setSpeakingSaturday] = useState(true);
   const [speakingSunday, setSpeakingSunday] = useState(true);
 
-  const [speakerList, setSpeakerList] = useState([]);
+  const speakersReducer = (state, action) => {
+    function updateFavorite(favoriteValue) {
+      return state.map((item) => {
+        if (item.id === action.sessionId) {
+          item.favorite = favoriteValue;
+        }
+        return item;
+      });
+    }
+    switch (action.type) {
+      case 'setSpeakerList':
+        return action.data;
+      case 'favorite':
+        return updateFavorite(true);
+      case 'unfavorite':
+        return updateFavorite(false);
+      default:
+        return state;
+    }
+  };
+
+  const [speakerList, dispatch] = useReducer(speakersReducer, []);
   const [isLoading, setIsLoading] = useState(true);
+
+  const context = useContext(ConfigContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,7 +47,10 @@ const Speakers = ({}) => {
       const speakerListServerFilter = SpeakerData.filter(({ sat, sun }) => {
         return (speakingSaturday && sat) || (speakingSunday && sun);
       });
-      setSpeakerList(speakerListServerFilter);
+      dispatch({
+        type: 'setSpeakerList',
+        data: speakerListServerFilter,
+      });
     });
     return () => {
       console.log('cleanup');
@@ -58,14 +85,11 @@ const Speakers = ({}) => {
   const heartFavoriteHandler = (e, favoriteValue) => {
     e.preventDefault();
     const sessionId = parseInt(e.target.attributes['data-sessionid'].value);
-    setSpeakerList(
-      speakerList.map((item) => {
-        if (item.id === sessionId) {
-          return { ...item, favorite: favoriteValue };
-        }
-        return item;
-      }),
-    );
+
+    dispatch({
+      type: favoriteValue ? 'favorite' : 'unfavorite',
+      sessionId,
+    });
     //console.log("changing session favorte to " + favoriteValue);
   };
 
@@ -77,30 +101,32 @@ const Speakers = ({}) => {
       <Menu />
       <div className="container">
         <div className="btn-toolbar  margintopbottom5 checkbox-bigger">
-          <div className="hide">
-            <div className="form-check-inline">
-              <label className="form-check-label">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  onChange={handleChangeSaturday}
-                  checked={speakingSaturday}
-                />
-                Saturday Speakers
-              </label>
+          {!context.showSpeakerSpeakingDays ? null : (
+            <div className="hide">
+              <div className="form-check-inline">
+                <label className="form-check-label">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    onChange={handleChangeSaturday}
+                    checked={speakingSaturday}
+                  />
+                  Saturday Speakers
+                </label>
+              </div>
+              <div className="form-check-inline">
+                <label className="form-check-label">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    onChange={handleChangeSunday}
+                    checked={speakingSunday}
+                  />
+                  Sunday Speakers
+                </label>
+              </div>
             </div>
-            <div className="form-check-inline">
-              <label className="form-check-label">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  onChange={handleChangeSunday}
-                  checked={speakingSunday}
-                />
-                Sunday Speakers
-              </label>
-            </div>
-          </div>
+          )}
         </div>
         <div className="row">
           <div className="card-deck">
