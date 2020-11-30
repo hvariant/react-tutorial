@@ -4,9 +4,11 @@ import ImageToggleOnScroll from "../src/ImageToggleOnScroll";
 const ImageChangeOnScroll = () => {
   const [currentDivId, setCurrentDivId] = useState(0);
   const [mouseEventCount, setMouseEventCount] = useState(0);
+
   useEffect(() => {
     window.document.title = `# ${currentDivId}`;
   }, [currentDivId]);
+
   return (
     <div>
       <span>mouseEventCount: {mouseEventCount}</span>

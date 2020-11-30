@@ -8,10 +8,10 @@ const ImageToggleOnScroll = ({ primaryImage, secondaryImage }) => {
   const scrollHandler = () => {
     setInView(isInView());
   };
-  const [isLoading, setIsLoading] = useState(true);
 
-  const imageRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [inView, setInView] = useState(false);
+  const imageRef = useRef(null);
 
   useEffect(() => {
     setInView(isInView());
