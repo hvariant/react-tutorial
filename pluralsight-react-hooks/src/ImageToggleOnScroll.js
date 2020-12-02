@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const ImageToggleOnScroll = ({ primaryImg, secondaryImg }) => {
+const ImageToggleOnScroll = ({ primaryImg, secondaryImg, alt }) => {
   const imageRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +34,7 @@ const ImageToggleOnScroll = ({ primaryImg, secondaryImg }) => {
           ? secondaryImg
           : primaryImg
       }
-      alt=""
+      alt={alt === null ? '' : alt}
       ref={imageRef}
       width="200"
       height="200"

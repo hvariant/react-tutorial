@@ -16,7 +16,7 @@ const SpeakerDetail = ({
         className="card-img-top"
         primaryImg={`/static/speakers/bw/rtf-${id}.jpg`}
         secondaryImg={`/static/speakers/rtf-${id}.jpg`}
-        alt="{firstName} {lastName}"
+        alt={`${firstName} ${lastName}`}
       />
       <div className="card-body">
         <h4 className="card-title">
