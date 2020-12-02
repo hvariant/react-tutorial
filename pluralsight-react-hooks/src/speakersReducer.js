@@ -13,6 +13,7 @@ const speakersReducer = (state, action) => {
         ...state,
         speakerList: action.data,
         isLoading: false,
+        hasErrored: false,
       };
     case 'favorite':
       return {
@@ -28,6 +29,12 @@ const speakersReducer = (state, action) => {
       return {
         ...state,
         favoriteClickCount: state.favoriteClickCount + 1,
+      };
+    case 'errored':
+      return {
+        ...state,
+        hasErrored: true,
+        error: action.error,
       };
     default:
       return state;

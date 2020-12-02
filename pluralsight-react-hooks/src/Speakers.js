@@ -11,9 +11,13 @@ const Speakers = ({}) => {
   const [speakingSunday, setSpeakingSunday] = useState(true);
   const context = useContext(ConfigContext);
 
-  const { isLoading, speakerList, toggleSpeakerFavorite } = useContext(
-    GlobalContext,
-  );
+  const {
+    isLoading,
+    speakerList,
+    toggleSpeakerFavorite,
+    hasErrored,
+    error,
+  } = useContext(GlobalContext);
 
   const handleChangeSaturday = () => {
     setSpeakingSaturday(!speakingSaturday);
@@ -48,6 +52,8 @@ const Speakers = ({}) => {
     e.preventDefault();
     toggleSpeakerFavorite(speakerRec);
   }, []);
+
+  if (hasErrored) return <div>Error: {error.message} </div>;
 
   if (isLoading) return <div>Loading...</div>;
 
