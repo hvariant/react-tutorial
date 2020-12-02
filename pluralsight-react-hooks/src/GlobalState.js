@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import useSpeakerDataManager from './useSpeakerDataManager';
 
-export const GlobalContext = React.createContext();
+export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
+  const provider = useSpeakerDataManager();
   return (
-    <GlobalContext.Provider value={useSpeakerDataManager()}>
-      {children}
-    </GlobalContext.Provider>
+    <GlobalContext.Provider value={provider}>{children}</GlobalContext.Provider>
   );
 };

@@ -1,12 +1,12 @@
 import ImageToggleOnScroll from './ImageToggleOnScroll';
 import React, { useContext } from 'react';
-import { GlobalContext } from './GlobalState';
+import { FavoriteClickCountContext } from './FavoriteClickCountContext';
 
 const SpeakerDetail = ({ index, speakerRec, onHeartFavoriteHandler }) => {
   const { id, firstName, lastName, bio, favorite } = speakerRec;
   console.log(`SpeakerDetail:${id} ${firstName} ${lastName} ${favorite}`);
 
-  const { incrementFavoriteClickCount } = useContext(GlobalContext);
+  const { incrementFavoriteClickCount } = useContext(FavoriteClickCountContext);
 
   return (
     <div className="card col-4 cardmin">
