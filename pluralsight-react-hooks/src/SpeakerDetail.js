@@ -1,9 +1,13 @@
 import ImageToggleOnScroll from './ImageToggleOnScroll';
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalContext } from './GlobalState';
 
 const SpeakerDetail = ({ index, speakerRec, onHeartFavoriteHandler }) => {
   const { id, firstName, lastName, bio, favorite } = speakerRec;
   console.log(`SpeakerDetail:${id} ${firstName} ${lastName} ${favorite}`);
+
+  const { incrementFavoriteClickCount } = useContext(GlobalContext);
+
   return (
     <div className="card col-4 cardmin">
       <ImageToggleOnScroll
@@ -11,7 +15,7 @@ const SpeakerDetail = ({ index, speakerRec, onHeartFavoriteHandler }) => {
         primaryImg={`/static/speakers/bw/rtf-${id}.jpg`}
         secondaryImg={`/static/speakers/rtf-${id}.jpg`}
         alt={`${firstName} ${lastName}`}
-        location={location}
+        index={index}
       />
       <div className="card-body">
         <h4 className="card-title">
@@ -20,13 +24,13 @@ const SpeakerDetail = ({ index, speakerRec, onHeartFavoriteHandler }) => {
             className={favorite ? 'heartredbutton' : 'heartdarkbutton'}
             onClick={(e) => {
               onHeartFavoriteHandler(e, speakerRec);
+              incrementFavoriteClickCount();
             }}
           />
           <span>
             {firstName} {lastName}
           </span>
         </h4>
-
         <span>{bio}</span>
       </div>
     </div>

@@ -3,10 +3,18 @@ import speakersReducer from './speakersReducer';
 import axios from 'axios';
 
 function useSpeakerDataManager() {
-  const [{ isLoading, speakerList }, dispatch] = useReducer(speakersReducer, {
-    speakerList: [],
-    isLoading: true,
-  });
+  const [{ isLoading, speakerList, favoriteClickCount }, dispatch] = useReducer(
+    speakersReducer,
+    {
+      speakerList: [],
+      isLoading: true,
+      favoriteClickCount: 0,
+    },
+  );
+
+  function incrementFavoriteClickCount() {
+    dispatch({ type: 'incrementFavoriteClickCount' });
+  }
 
   function toggleSpeakerFavorite(speakerRec) {
     const updateData = async () => {
@@ -29,7 +37,13 @@ function useSpeakerDataManager() {
     fetchData();
   }, []); // [speakingSunday, speakingSaturday]);
 
-  return { isLoading, speakerList, toggleSpeakerFavorite };
+  return {
+    isLoading,
+    speakerList,
+    toggleSpeakerFavorite,
+    favoriteClickCount,
+    incrementFavoriteClickCount,
+  };
 }
 
 export default useSpeakerDataManager;
