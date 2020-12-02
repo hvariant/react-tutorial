@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const ImageToggleOnScroll = ({ primaryImg, secondaryImg, alt }) => {
+const ImageToggleOnScroll = ({ primaryImg, secondaryImg, alt, location }) => {
   const imageRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -14,12 +14,15 @@ const ImageToggleOnScroll = ({ primaryImg, secondaryImg, alt }) => {
 
   useEffect(() => {
     setIsLoading(false);
-    setInView(isInView());
     window.addEventListener('scroll', scrollHandler);
     return () => {
       window.removeEventListener('scroll', scrollHandler);
     };
   }, []);
+
+  useEffect(() => {
+    setInView(isInView());
+  }, [location]);
 
   const scrollHandler = () => {
     setInView(isInView());

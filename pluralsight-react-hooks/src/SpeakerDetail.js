@@ -3,6 +3,7 @@ import React from 'react';
 
 const SpeakerDetail = ({
   id,
+  location,
   firstName,
   lastName,
   favorite,
@@ -17,6 +18,7 @@ const SpeakerDetail = ({
         primaryImg={`/static/speakers/bw/rtf-${id}.jpg`}
         secondaryImg={`/static/speakers/rtf-${id}.jpg`}
         alt={`${firstName} ${lastName}`}
+        location={location}
       />
       <div className="card-body">
         <h4 className="card-title">
