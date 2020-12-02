@@ -1,27 +1,8 @@
-import { useReducer, useState } from 'react';
-import useInterval from './useInterval';
+import useEmailValidation from './useEmailValidation';
 
 function EmailValidatingForm() {
-  const validateEmail = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  };
-  const [emailValid, setEmailValid] = useState(false);
-  const emailReducer = (state, action) => {
-    const isValidEmail = validateEmail(action);
-    setEmailValid(isValidEmail);
-    return action;
-  };
-
-  const [email, setEmail] = useReducer(emailReducer, '');
-  const maxSeconds = 30;
-  const [count, setCount] = useState(maxSeconds);
-
-  useInterval(
-    () => {
-      setCount(count - 1);
-    },
-    count > 0 ? 1000 : null,
+  const { setEmail, count, setCount, email, emailValid } = useEmailValidation(
+    30,
   );
 
   return (
@@ -62,4 +43,5 @@ function EmailValidatingForm() {
     </div>
   );
 }
+
 export default EmailValidatingForm;
