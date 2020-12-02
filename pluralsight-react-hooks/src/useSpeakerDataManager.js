@@ -1,5 +1,4 @@
 import { useEffect, useReducer } from 'react';
-import SpeakerData from './SpeakerData';
 import speakersReducer from './speakersReducer';
 import axios from 'axios';
 
